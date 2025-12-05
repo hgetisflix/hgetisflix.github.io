@@ -1,32 +1,30 @@
 {
-    "featured": {
-        "title": "Recently Added",
-        "thumbnail": "https://img.youtube.com/vi/PP_8DRrsnL0/hqdefault.jpg",
-        "id": "PP_8DRrsnL0"
-    },
+  "featured": {
+    "title": "Recently Added",
+    "id": "PP_8DRrsnL0",
+    "thumbnailBase": "https://img.youtube.com/vi/PP_8DRrsnL0"
+  },
 
-    "playlists": [
+  "playlists": [
+    {
+      "name": "Funny Moments",
+      "videos": [
         {
-            "name": "Funny Moments",
-            "videos": [
-                {
-                    "thumb": "https://img.youtube.com/vi/VIDEO_ID_1/hqdefault.jpg",
-                    "id": "VIDEO_ID_1"
-                },
-                {
-                    "thumb": "https://img.youtube.com/vi/VIDEO_ID_2/hqdefault.jpg",
-                    "id": "VIDEO_ID_2"
-                }
-            ]
-        },
-        {
-            "name": "Goofy Classics",
-            "videos": [
-                {
-                    "thumb": "https://img.youtube.com/vi/VIDEO_ID_3/hqdefault.jpg",
-                    "id": "VIDEO_ID_3"
-                }
-            ]
+          "id": "PP_8DRrsnL0",
+          "title": "PP_8DRrsnL0 - Your Clip",
+          "thumbBase": "https://img.youtube.com/vi/PP_8DRrsnL0"
         }
-    ]
+      ]
+    },
+    {
+      "name": "Goofy Classics",
+      "videos": [
+        {
+          "id": "PP_8DRrsnL0",
+          "title": "Same Clip (demo)",
+          "thumbBase": "https://img.youtube.com/vi/PP_8DRrsnL0"
+        }
+      ]
+    }
+  ]
 }

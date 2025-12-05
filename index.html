@@ -1,35 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HgetisFlix</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>HgetisFlix</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-
-<header>
+  <header>
     <h1 class="logo">HgetisFlix</h1>
-</header>
+  </header>
 
-<!-- Featured Section -->
-<section id="featured" class="featured">
-    <div class="featured-info">
-        <h2 id="featured-title"></h2>
+  <!-- Featured -->
+  <section id="featured" class="featured">
+    <div class="featured-overlay">
+      <div class="featured-info">
+        <h2 id="featured-title">Featured</h2>
+        <button id="featured-play" class="play-btn">Play</button>
+      </div>
     </div>
-</section>
+  </section>
 
-<!-- Playlists generated here -->
-<div id="playlists-container"></div>
+  <!-- Playlists container -->
+  <main id="playlists-container"></main>
 
-<!-- Popup Player -->
-<div id="playerModal" class="modal">
+  <!-- Player Modal -->
+  <div id="playerModal" class="modal" aria-hidden="true">
     <div class="modal-content">
-        <span id="closeBtn">&times;</span>
-        <iframe id="ytplayer" src="" frameborder="0" allowfullscreen></iframe>
+      <span id="closeBtn" class="closeBtn">&times;</span>
+      <iframe id="ytplayer" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
-</div>
+  </div>
 
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
