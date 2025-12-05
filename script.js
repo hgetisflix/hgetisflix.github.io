@@ -1,4 +1,3 @@
-// ---------- small helper ----------
 function makeEl(tag, cls){ const e = document.createElement(tag); if(cls) e.className = cls; return e; }
 
 // ---------- fetch JSON and render ----------
@@ -12,7 +11,6 @@ async function loadAndRender(){
     setupPlaylists(data.playlists || []);
   }catch(err){
     console.error('Error loading videos.json:', err);
-    // show a lightweight error message on page
     const main = document.getElementById('playlists-container');
     main.innerHTML = `<p style="color:#faa;padding:20px">Could not load videos.json — check console for details.</p>`;
   }
@@ -23,18 +21,17 @@ function setupFeatured(f){
   const section = document.getElementById('featured');
   const titleEl = document.getElementById('featured-title');
   const playBtn = document.getElementById('featured-play');
+  const imgEl = document.getElementById('featured-img');
 
   if(!f || !f.id){
-    // hide featured if missing
     section.style.display = 'none';
     return;
   }
 
   titleEl.textContent = f.title || 'Featured';
 
-  // try progressive thumbnail fallback
   loadBestThumbnail(f.thumbnailBase || `https://img.youtube.com/vi/${f.id}`, (best) => {
-    section.style.backgroundImage = `url("${best}")`;
+    imgEl.src = best;
   });
 
   section.onclick = () => openPlayer(f.id);
@@ -62,22 +59,14 @@ function setupPlaylists(playlists){
     plWrap.appendChild(row);
     container.appendChild(plWrap);
 
-    // populate
     (pl.videos || []).forEach(video => {
       const card = makeEl('div', 'card');
       const img = makeEl('img');
-      const title = makeEl('div', 'card-title');
+      const title = makeEl('div','card-title');
       title.textContent = video.title || '';
-      // thumbnail base allows custom base or direct url
       const thumbBase = video.thumbBase || `https://img.youtube.com/vi/${video.id}`;
-      // attempt progressive load
-      loadBestThumbnail(thumbBase, (bestUrl) => {
-        img.src = bestUrl;
-      });
-      img.onerror = () => {
-        // last resort
-        img.src = `https://img.youtube.com/vi/${video.id}/hqdefault.jpg`;
-      };
+      loadBestThumbnail(thumbBase, (bestUrl) => { img.src = bestUrl; });
+      img.onerror = () => { img.src = `https://img.youtube.com/vi/${video.id}/hqdefault.jpg`; };
       card.appendChild(img);
       if(title.textContent) card.appendChild(title);
       card.onclick = () => openPlayer(video.id);
@@ -100,23 +89,25 @@ function setupPlaylists(playlists){
 const modal = document.getElementById('playerModal');
 const player = document.getElementById('ytplayer');
 const closeBtn = document.getElementById('closeBtn');
+
 function openPlayer(id){
   if(!id) return;
   player.src = `https://www.youtube.com/embed/${id}?autoplay=1`;
   modal.style.display = 'flex';
   modal.setAttribute('aria-hidden', 'false');
 }
+
 function closePlayer(){
   modal.style.display = 'none';
   player.src = '';
   modal.setAttribute('aria-hidden', 'true');
 }
+
 closeBtn.onclick = closePlayer;
 modal.onclick = (e) => { if(e.target === modal) closePlayer(); };
 
 // ---------- progressive thumbnail loader ----------
 function loadBestThumbnail(baseUrl, cb){
-  // baseUrl should be like "https://img.youtube.com/vi/ID" or full URL without extension
   const tryList = [
     `${baseUrl}/maxresdefault.jpg`,
     `${baseUrl}/sddefault.jpg`,
@@ -130,13 +121,11 @@ function loadBestThumbnail(baseUrl, cb){
     const url = tryList[i++];
     const img = new Image();
     img.onload = () => {
-      // sometimes youtube returns a placeholder 120x90 even for missing; accept any loaded with size>120x90 else try next
       if(img.naturalWidth >= 120 && img.naturalHeight >= 90){
         cb(url);
       } else { tryNext(); }
     };
     img.onerror = tryNext;
-    // small timeout to guard against hanging, but Image has no native timeout — we accept default
     img.src = url + '?cachebust=' + Date.now();
   })();
 }
